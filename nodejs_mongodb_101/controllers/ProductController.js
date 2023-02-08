@@ -1,5 +1,6 @@
 
 const Product = require('../models/ProductModel')
+const _ = require('lodash')
 
 module.exports = function(app){
     app.get('/products/:id',async(req,res)=>{
@@ -24,7 +25,11 @@ module.exports = function(app){
     });
     app.post('/products',async(req,res)=>{
         try{
-            const product = await Product.create(req.body);
+            //const product = await Product.create(req.body);
+            product = new Product(_.pick(req.body,[
+                'name','quantity','price'
+            ]))
+            await product.save();
             res.status(200).json(product)
         }catch(error){
             console.log(error.message);

@@ -1,15 +1,13 @@
 const express = require('express')
 const app = express()
 app.use(express.json())
-
-require('dotenv').config();
-require('./controllers/db')(); 
-require('./controllers/ProductController')(app);
-
 // if you want active urlencoded
 //app.use(express.urlencoded({extended:false}))
+require('dotenv').config();
+require('./controllers/db')(); 
 
 // Routes
+require('./controllers/ProductController')(app);
 app.get('/',(req,res)=>{
     res.send('Hello Node API')
 })
